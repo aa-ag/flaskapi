@@ -3,10 +3,6 @@
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 
-##--- Global ---##
-parser = reqparse.RequestParser()
-
-
 ##--- init API ---##
 app = Flask(__name__)
 api = Api(app)
@@ -23,13 +19,14 @@ PEOPLE = {
 
 
 ##--- class(es) ---##
+parser = reqparse.RequestParser()
 
 class PeopleList(Resource):
+    
     def get(self):
         return PEOPLE
 
     def post(self):
-        global parser
         parser.add_argument('name')
         parser.add_argument('age')
         parser.add_argument('favorite_wine')
@@ -47,6 +44,8 @@ class PeopleList(Resource):
 ##--- route(s) ---##
 
 api.add_resource(PeopleList, '/people/')
+# api.add_resource(Student, '/people/<person_id>')
+
 
 ##--- run app in debug mode ---##
 
